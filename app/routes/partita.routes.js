@@ -9,4 +9,6 @@ module.exports = function (app) {
   app.put("/api/partita/updateInizioPartita", partita.updateIniziaPartita);
 
   app.put("/api/partita/updateNumeroPersonaggi", partita.updateNumeroPersonaggi);
+
+  app.delete("/api/partita/:id_partita", partita.deletePartita);
 };

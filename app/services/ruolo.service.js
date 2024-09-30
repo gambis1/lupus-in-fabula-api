@@ -1,4 +1,4 @@
-var Ruolo = require("../models/ruolo/ruolo.model");
+var Ruolo = require("../models/ruolo/index");
 
 // getRuoli
 exports.get = async (req, res) => {

@@ -31,11 +31,12 @@ exports.createGiocatore = async (req, res) => {
       nome: _req.nome,
       identificativo: generateIdGiocatore(),
       ruolo: null,
-      in_vita: true
+      in_vita: true,
+      voti: []
     });
     item.giocatori.push(giocatore);
     await item.save();
-    res.send({ idGiocatore: giocatore.identificativo });
+    res.send({ id_giocatore: giocatore.identificativo });
   } catch (err) {
     res.status(500).send({ message: err.message });
   }
@@ -70,13 +71,56 @@ exports.assegnazionePersonaggi = async (req, res) => {
           giocatori[j].ruolo = new Ruolo({
             name: ruolo.name,
             code: ruolo.code,
-            description_role: ruolo.description_role
+            description_role: ruolo.description_role,
+            image: ruolo.image
           });
           numeroPersonaggi[ruolo.code]--;
           indexGiocatori++;
         } else break;
       }
     }
+    var dati = await item.save();
+    res.send(dati);
+  } catch (err) {
+    res.status(500).send({ message: err.message });
+  }
+};
+
+exports.gestisciVoto = async (req, res) => {
+  try {
+    var _req = req.body;
+    var item = await Partita.findOne({ id_partita: _req.id_partita }).exec();
+    var giocatore = item.giocatori.find((g) => g.identificativo == _req.id_giocatore_votato);
+    if (giocatore.voti.includes(_req.id_giocatore)) {
+      var index = giocatore.voti.indexOf(_req.id_giocatore);
+      giocatore.voti.splice(index, 1);
+    } else giocatore.voti.push(_req.id_giocatore);
+    var dati = await item.save();
+    res.send(dati);
+  } catch (err) {
+    res.status(500).send({ message: err.message });
+  }
+};
+
+exports.azzeraPunteggi = async (req, res) => {
+  try {
+    var item = await Partita.findOne({ id_partita: req.body.id_partita }).exec();
+    item.giocatori.forEach(giocatore => {
+        giocatore.voti = [];
+    });
+    var dati = await item.save();
+    res.send(item);
+  } catch (err) {
+    res.status(500).send({ message: err.message });
+  }
+};
+
+exports.eliminaGiocatore = async (req, res) => {
+  try {
+    var _req = req.body;
+    var item = await Partita.findOne({ id_partita: _req.id_partita }).exec();
+    var giocatore = item.giocatori.find((g) => g.identificativo == _req.id_giocatore_votato);
+    giocatore.in_vita = false;
     var dati = await item.save();
     res.send(dati);
   } catch (err) {

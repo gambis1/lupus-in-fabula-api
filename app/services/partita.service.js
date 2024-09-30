@@ -59,3 +59,12 @@ exports.updateNumeroPersonaggi = async (req, res) => {
     res.status(500).send({ message: err.message });
   }
 };
+
+exports.deletePartita = async (req, res) => {
+  try {
+    await Partita.deleteOne({ id_partita: req.params.id_partita }).exec();
+    res.send({ fine_partita: true });
+  } catch (err) {
+    res.status(500).send({ message: err.message });
+  }
+};

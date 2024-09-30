@@ -6,7 +6,8 @@ var Giocatore = mongoose.Schema({
   identificativo: { type: String, required: false },
   nome: { type: String, required: false },
   ruolo: { type: Ruolo, require: false },
-  in_vita: { type: Boolean, required: false }
+  in_vita: { type: Boolean, required: false },
+  voti: [String]
 });
 
 module.exports = Giocatore;
