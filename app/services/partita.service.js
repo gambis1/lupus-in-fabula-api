@@ -51,12 +51,14 @@ exports.updateNumeroPersonaggi = async (req, res) => {
   try {
     var item = await Partita.findOne({ id_partita: req.body.id_partita }).exec();
     var _req = Object.assign({}, req.body);
+
     var countGiocatori = 0;
-    Object.values(_req).forEach(value => {
-      countGiocatori += value;
-    })
-    if(countGiocatori != item.giocatori.length) throw "Impossibile continuare il numero associato dei giocatori è diverso dai giocatori che si sono inseriti"
     delete _req.id_partita;
+    Object.entries(_req).forEach(([key, value]) => {
+      if (_req[key] === null) _req[key] = 0;
+      countGiocatori += value;
+    });
+    if (countGiocatori != item.giocatori.length) throw { message: "Impossibile continuare il numero associato dei giocatori è diverso dai giocatori che si sono inseriti" };
     item.numero_personaggi = _req;
     var dati = await item.save();
     res.send(dati);
