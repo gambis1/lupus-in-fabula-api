@@ -7,7 +7,7 @@ exports.getGiocatori = async (req, res) => {
     var item = await Partita.findOne({ id_partita: req.params.id_partita }).exec();
     res.send(item.giocatori);
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(500).send({ message: err.message });
   }
 };
 
@@ -17,7 +17,7 @@ exports.getGiocatore = async (req, res) => {
     var giocatore = item.giocatori.find((g) => g.identificativo == req.params.id_giocatore);
     res.send(giocatore);
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(500).send({ message: err.message });
   }
 };
 
@@ -38,7 +38,7 @@ exports.createGiocatore = async (req, res) => {
     await item.save();
     res.send({ id_giocatore: giocatore.identificativo });
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(500).send({ message: err.message });
   }
 };
 
@@ -82,7 +82,7 @@ exports.assegnazionePersonaggi = async (req, res) => {
     var dati = await item.save();
     res.send(dati);
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(500).send({ message: err.message });
   }
 };
 
@@ -98,7 +98,7 @@ exports.gestisciVoto = async (req, res) => {
     var dati = await item.save();
     res.send(dati);
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(500).send({ message: err.message });
   }
 };
 
@@ -111,7 +111,7 @@ exports.azzeraPunteggi = async (req, res) => {
     var dati = await item.save();
     res.send(item);
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(500).send({ message: err.message });
   }
 };
 
@@ -124,6 +124,6 @@ exports.eliminaGiocatore = async (req, res) => {
     var dati = await item.save();
     res.send(dati);
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(500).send({ message: err.message });
   }
 };

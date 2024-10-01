@@ -6,7 +6,7 @@ exports.get = async (req, res) => {
     var items = await Ruolo.find();
     res.send(items);
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(500).send({ message: err.message });
   }
 };
 
@@ -16,7 +16,7 @@ exports.getItem = async (req, res) => {
     var item = await Ruolo.findOne({ code: req.params.code }).exec();
     res.send(item);
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(500).send({ message: err.message });
   }
 };
 

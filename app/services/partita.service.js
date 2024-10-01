@@ -5,7 +5,7 @@ exports.getPartita = async (req, res) => {
     var item = await Partita.findOne({ id_partita: req.params.id_partita }).exec();
     res.send(item);
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(500).send({ message: err.message });
   }
 };
 
@@ -22,7 +22,7 @@ exports.create = async (req, res) => {
     var dati = await item.save();
     res.send(dati);
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(500).send({ message: err.message });
   }
 };
 
@@ -43,7 +43,7 @@ exports.updateIniziaPartita = async (req, res) => {
     var dati = await item.save();
     res.send(dati);
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(500).send({ message: err.message });
   }
 };
 
@@ -61,7 +61,7 @@ exports.updateNumeroPersonaggi = async (req, res) => {
     var dati = await item.save();
     res.send(dati);
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(500).send({ message: err.message });
   }
 };
 
@@ -70,6 +70,6 @@ exports.deletePartita = async (req, res) => {
     await Partita.deleteOne({ id_partita: req.params.id_partita }).exec();
     res.send({ fine_partita: true });
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(500).send({ message: err.message });
   }
 };
