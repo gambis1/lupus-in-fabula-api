@@ -39,7 +39,6 @@ var generateIdPartita = () => {
 exports.updateIniziaPartita = async (req, res) => {
   try {
     var item = await Partita.findOne({ id_partita: req.body.id_partita }).exec();
-    if (item.giocatori.length < 6) throw "Impossibile creare la partita. Il numero dei giocatori è inferiore a 6";
     item.inizio_partita = true;
     var dati = await item.save();
     res.send(dati);
