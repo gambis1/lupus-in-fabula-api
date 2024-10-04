@@ -10,5 +10,7 @@ module.exports = function (app) {
 
   app.put("/api/partita/updateNumeroPersonaggi", partita.updateNumeroPersonaggi);
 
+  app.put("/api/partita/gestisciVotazioni", partita.gestisciVotazioni);
+
   app.delete("/api/partita/:id_partita", partita.deletePartita);
 };

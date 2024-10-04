@@ -14,6 +14,7 @@ exports.create = async (req, res) => {
     const item = new Partita({
       id_partita: generateIdPartita(),
       inizio_partita: false,
+      votazioni_aperte: false,
       giocatori: [],
       numero_personaggi: null,
       fine_partita: false
@@ -40,6 +41,17 @@ exports.updateIniziaPartita = async (req, res) => {
   try {
     var item = await Partita.findOne({ id_partita: req.body.id_partita }).exec();
     item.inizio_partita = true;
+    var dati = await item.save();
+    res.send(dati);
+  } catch (err) {
+    res.status(500).send({ message: err.message });
+  }
+};
+
+exports.gestisciVotazioni = async (req, res) => {
+  try {
+    var item = await Partita.findOne({ id_partita: req.body.id_partita }).exec();
+    item.votazioni_aperte = !item.votazioni_aperte;
     var dati = await item.save();
     res.send(dati);
   } catch (err) {
