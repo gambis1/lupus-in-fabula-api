@@ -4,7 +4,7 @@ module.exports = function (app) {
 
   app.get("/api/partita/:id_partita", partita.getPartita);
 
-  app.get("/api/partita", partita.create);
+  app.post("/api/partita", partita.create);
 
   app.put("/api/partita/updateInizioPartita", partita.updateIniziaPartita);
 
